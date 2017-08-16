@@ -70,6 +70,7 @@ public class JFrameCadastroCarro extends javax.swing.JFrame {
         jComboBoxFabricante = new javax.swing.JComboBox();
         jRadioButtonQtdPortas2 = new javax.swing.JRadioButton();
         jRadioButtonQtdPortas4 = new javax.swing.JRadioButton();
+        jLabelNumCod = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Carros");
@@ -208,7 +209,9 @@ public class JFrameCadastroCarro extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabelCodigo)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabelCodigo)
+                                    .addComponent(jLabelNumCod))
                                 .addGap(24, 24, 24)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -330,7 +333,9 @@ public class JFrameCadastroCarro extends javax.swing.JFrame {
                                     .addComponent(jLabelFabricante))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabelNumCod))
                                     .addComponent(jComboBoxFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -423,11 +428,22 @@ public class JFrameCadastroCarro extends javax.swing.JFrame {
         meuCarro.setDescricao(jTextAreaDescricao.getText());
         
         CarroDAO dao = new CarroDAO();
+        if(!jLabelNumCod.getText().equals("")){
+            meuCarro.setId(Integer.parseInt(jLabelNumCod.getText()));
+            int codigo = dao.alterar(meuCarro);
+            if(codigo != Utilitarios.NAO_FOI_POSSIVEL_ALTERAR){
+                JOptionPane.showMessageDialog(null, "Alteração realizada com sucesso");
+            }else{
+                JOptionPane.showMessageDialog(null, "Não foi possivel alterar");
+            }
+        }else{        
         int codigo = dao.inserir(meuCarro);
         if(codigo!=Utilitarios.NAO_FOI_POSSIVEL_INSERIR){
             JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso");
+            jLabelNumCod.setText(String.valueOf(codigo));
         }else
             JOptionPane.showMessageDialog(null, "Não foi possível inserir");
+        }
         
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
@@ -490,6 +506,7 @@ public class JFrameCadastroCarro extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelEstaFuncionando;
     private javax.swing.JLabel jLabelFabricante;
     private javax.swing.JLabel jLabelNome;
+    private javax.swing.JLabel jLabelNumCod;
     private javax.swing.JLabel jLabelPlaca;
     private javax.swing.JLabel jLabelQtdBatidas;
     private javax.swing.JLabel jLabelQtdPortas;
