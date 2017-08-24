@@ -10,11 +10,12 @@ import javax.swing.JFrame;
  * @author Iara Siva de Oliveira, 2017-08-14
  */
 public class JFrameInicial extends JFrame implements JFrameComportamentosInterface {
-    
+
     private JButton jButtonListaCarros;
     private JButton jButtonCadastroCarro;
-    
-    public JFrameInicial(){
+    private JButton jButtonListaCategoria;
+
+    public JFrameInicial() {
         criarTela();
         criarComponentes();
         definirLocalizacao();
@@ -36,18 +37,21 @@ public class JFrameInicial extends JFrame implements JFrameComportamentosInterfa
     public void criarComponentes() {
         jButtonListaCarros = new JButton("Lista de Carros");
         jButtonCadastroCarro = new JButton("Cadastro de Carro");
+        jButtonListaCategoria = new JButton("Lista de Categorias");
     }
 
     @Override
     public void definirLocalizacao() {
         jButtonListaCarros.setBounds(10, 10, 200, 35);
         jButtonCadastroCarro.setBounds(10, 55, 200, 35);
+        jButtonListaCategoria.setBounds(10, 100, 200, 35);
     }
 
     @Override
     public void adicionarComponentes() {
         add(jButtonListaCarros);
         add(jButtonCadastroCarro);
+        add(jButtonListaCategoria);
     }
 
     @Override
@@ -59,7 +63,7 @@ public class JFrameInicial extends JFrame implements JFrameComportamentosInterfa
                 JFrameListaCarros lista = new JFrameListaCarros();
             }
         });
-        
+
         jButtonCadastroCarro.addActionListener(new ActionListener() {
 
             @Override
@@ -67,7 +71,10 @@ public class JFrameInicial extends JFrame implements JFrameComportamentosInterfa
                 new JFrameCadastroCarro().setVisible(true);
             }
         });
+        
+        jButtonListaCategoria.addActionListener((ActionEvent e)->{
+            new JFrameListaCategorias().setVisible(true);
+        });
     }
-    
-    
+
 }
